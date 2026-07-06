@@ -311,5 +311,10 @@ router.get('/me', requireAuth, async (req, res) => {
 
   res.json({ user: row });
 });
-
+// TEMP - DELETE AFTER USE
+router.get('/approve-devices-now', async (req, res) => {
+  await db.prepare("UPDATE devices SET status = 'approved' WHERE status = 'pending'").run();
+  const devices = await db.prepare('SELECT device_id, device_name, status FROM devices').all();
+  res.json({ done: true, devices });
+});
 module.exports = router;
