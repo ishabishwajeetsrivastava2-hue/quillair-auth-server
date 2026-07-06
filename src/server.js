@@ -5,6 +5,7 @@ const cors = require('cors');
 const { init: initDb } = require('./db/init');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const deviceRoutes = require('./routes/devices');
 const { authLimiter } = require('./middleware/rateLimiter');
 
 initDb();
@@ -28,6 +29,8 @@ app.use('/auth/register', authLimiter);
 
 app.use('/auth', authRoutes);
 app.use('/auth/users', userRoutes);
+app.use('/auth/device', deviceRoutes);
+app.use('/auth/devices', deviceRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
